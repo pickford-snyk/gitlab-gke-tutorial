@@ -1,30 +1,31 @@
 # Gitlab on Google Cloud
 
-This tutorial will deploy gitlab on Google Cloud using Helm and Kubernetes. 
+This tutorial will deploy Gitlab on Google Cloud using Helm and Kubernetes. 
 
-The instructions mostly use a manual setup in order to help clarify how Google
-Cloud projects are configured. However, a shell script is included in this 
-repository for automating setup and teardown. This script will enable other 
-tutorials (eg: [Juice Shop Deployment](#), [Snyk & Gitlab Bug Bash Tutorial](#), 
+These instructions mostly use manual steps within the Google Cloud console in
+order to help familiarize learners with the Google Cloud ecosystem.
+**TO DO:** ~~However, a shell script is included in this repository for automating setup 
+and teardown. This script will enable other tutorials (eg: [Juice Shop Deployment](#), [Snyk & Gitlab Bug Bash Tutorial](#), 
 [Gitlab with Jenkins](#), [Gitlab with Snyk Broker](#), [Snyk & Gitlab CI Scans](#),
-), product demos and reduce costs.
+), product demos and reduce costs.~~
 
-These instructions largely follow the gitlab instructions. Additional context
-is added for Google Cloud steps. If any steps don't work, I recommend looking 
-at the corresponding primary source instructions. 
+These instructions use [Gitlab's official quickstart instructions](https://docs.gitlab.com/charts/quickstart/). 
+Additional context is added for Google Cloud steps. If any steps don't work, I 
+recommend looking at the corresponding primary source instructions. *Note:* Gitlab's 
+quickstart instructions are not meant to sustain a production instance. 
 
-Contributions to this project are welcome. Please read the [Contributors Guide]().
+**TO DO:** ~~Contributions to this project are welcome.  Please read the [Contributors Guide]().~~
 
 ## Prerequisites
-1. A Google Cloud account
-   1. Google offers a [90 day trial period with a $300 credit](https://console.cloud.google.com/freetrial)
-2. [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install)
-3. [Install kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
-4. [Install helm](https://helm.sh/docs/intro/install/)
-5. Own a domain with managed by [Cloud Domains](https://cloud.google.com/domains/docs/register-domain)
-   1. *Optional*: You can use a different domain registrar. However, we're 
-   going to assign all subdomains to gitlab, so a domain specific for this 
-   tutorial is recommended. The costs should be trivial (~$10)
+- A Google Cloud account
+  - Google offers a [90 day trial period with a $300 credit](https://console.cloud.google.com/freetrial)
+- [Install the gcloud CLI](https://cloud.google.com/sdk/docs/install)
+- [Install kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- [Install helm](https://helm.sh/docs/intro/install/)
+- Own a domain which you can manage DNS records for
+  - [Instructions are provided](#register-a-domain-with-cloud-domains) below on how to register a domain with 
+   [Cloud Domains](https://cloud.google.com/domains/docs/register-domain), 
+   which costs $12/year.
 
 ## Google Project and Cluster Setup
 1. Login and [Create a project](https://developers.google.com/workspace/guides/create-project)
@@ -126,7 +127,7 @@ kubectl get secret gitlab-gitlab-initial-root-password -ojsonpath='{.data.passwo
 ```
 
 
-## Registering a Domain and Creating an A record in Google Cloud
+## Register a domain with Cloud Domains
 1. Search for, "Cloud DNS," navigate to the service and enable the API
    ![After using the search bar to search and select "Cloud DNS" enable the API](images/enable_cloud_dns_api.png)
 2. Select "Cloud Domains" from the left side menu. Search for the domain you
@@ -146,7 +147,6 @@ if you've already setup and deleted Gitlab on the same domain previously. If
 you still can't navigate to your gitlab login page after 5 minutes, see the 
 troubleshooting section.
    ![An asterisk (wildcard) is entered into the DNS name field and the TTL field is set to 1](images/gitlab_login.png)
-7. asdf
 
 
 ## Recommended Next Steps
@@ -177,3 +177,8 @@ Potential causes
       project?
    3. Insecure site: Misconfigured SSL
 2. Does the static IP need to be on the attached to a wildcard subdomain?
+
+## Additional Resources
+- [Cloud Native Gitlab Helm Chart](https://gitlab.com/gitlab-org/charts/gitlab/-/tree/master/)
+- [Gitlab test install instructions](https://docs.gitlab.com/charts/quickstart/index.html)
+- [Gitlab managed bootstrap script](https://gitlab.com/gitlab-org/charts/gitlab/blob/master/scripts/gke_bootstrap_script.sh)
